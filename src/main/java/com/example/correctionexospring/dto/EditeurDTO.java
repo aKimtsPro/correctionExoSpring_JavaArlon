@@ -14,5 +14,5 @@ public class EditeurDTO {
     private String email;
     private String adresse;
 
-    private List<LivreDTO> livresEdites;
+    private List<SmallLivreDTO> livresEdites;
 }

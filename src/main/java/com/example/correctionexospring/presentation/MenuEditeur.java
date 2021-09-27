@@ -1,21 +1,22 @@
 package com.example.correctionexospring.presentation;
 
+import com.example.correctionexospring.dto.EditeurDTO;
 import com.example.correctionexospring.dto.LivreDTO;
 import com.example.correctionexospring.exception.ElementAlreadyPresentException;
 import com.example.correctionexospring.exception.ElementNotFoundException;
-import com.example.correctionexospring.metier.service.LivreService;
+import com.example.correctionexospring.metier.service.EditeurService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
 
 @Component
-public class MenuLivre {
+public class MenuEditeur {
 
-    private final LivreService service;
+    private final EditeurService service;
     private final Scanner sc;
 
-    public MenuLivre(LivreService service, @Qualifier("sc2") Scanner sc) {
+    public MenuEditeur(EditeurService service, @Qualifier("sc2") Scanner sc) {
         this.service = service;
         this.sc = sc;
     }
@@ -31,7 +32,7 @@ public class MenuLivre {
 
     private void displayMenu(){
         System.out.println("""
-                --- MENU LIVRE ---
+                --- MENU EDITEUR ---
                 1 - afficher un
                 2 - afficher tout
                 3 - ajouter
@@ -59,7 +60,7 @@ public class MenuLivre {
     }
     private void displayOne(){
 
-        System.out.println("id du livre");
+        System.out.println("id de l'editeur: ");
         String id = sc.nextLine();
 
         try {
@@ -71,10 +72,20 @@ public class MenuLivre {
     }
     private void insert(){
 
-        // TODO : préciser
-        System.out.println("Un faux element va être inséré");
+        EditeurDTO.EditeurDTOBuilder builder = EditeurDTO.builder();
+
+        System.out.println("id: ");
+        builder.id(sc.nextLine());
+        System.out.println("nom: ");
+        builder.nom(sc.nextLine());
+        System.out.println("adresse: ");
+        builder.adresse(sc.nextLine());
+        System.out.println("email: ");
+        builder.email(sc.nextLine());
+
         try {
-            service.insert(new LivreDTO());
+            service.insert( builder.build() );
+            System.out.println("succes");
         } catch (ElementAlreadyPresentException e) {
             System.out.println(e.getMessage());
         }
@@ -82,12 +93,11 @@ public class MenuLivre {
     }
     private void delete(){
 
-        System.out.println("id du livre");
+        System.out.println("id de l'editeur: ");
         String id = sc.nextLine();
 
         try {
             service.delete(id);
-            System.out.println("succes");
         } catch (ElementNotFoundException e) {
             System.out.println(e.getMessage());
         }

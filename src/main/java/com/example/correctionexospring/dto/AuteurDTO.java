@@ -17,5 +17,5 @@ public class AuteurDTO {
     private String prenom;
     private String nom;
 
-    private List<LivreDTO> livresEcrit;
+    private List<SmallLivreDTO> livresEcrit;
 }

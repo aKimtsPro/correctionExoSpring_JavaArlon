@@ -1,21 +1,21 @@
 package com.example.correctionexospring.presentation;
 
-import com.example.correctionexospring.dto.LivreDTO;
+import com.example.correctionexospring.dto.AuteurDTO;
 import com.example.correctionexospring.exception.ElementAlreadyPresentException;
 import com.example.correctionexospring.exception.ElementNotFoundException;
-import com.example.correctionexospring.metier.service.LivreService;
+import com.example.correctionexospring.metier.service.AuteurService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
 
 @Component
-public class MenuLivre {
+public class MenuAuteur {
 
-    private final LivreService service;
+    private final AuteurService service;
     private final Scanner sc;
 
-    public MenuLivre(LivreService service, @Qualifier("sc2") Scanner sc) {
+    public MenuAuteur(AuteurService service, @Qualifier("sc2") Scanner sc) {
         this.service = service;
         this.sc = sc;
     }
@@ -31,7 +31,7 @@ public class MenuLivre {
 
     private void displayMenu(){
         System.out.println("""
-                --- MENU LIVRE ---
+                --- MENU AUTEUR ---
                 1 - afficher un
                 2 - afficher tout
                 3 - ajouter
@@ -59,8 +59,8 @@ public class MenuLivre {
     }
     private void displayOne(){
 
-        System.out.println("id du livre");
-        String id = sc.nextLine();
+        System.out.println("id de l'auteur: ");
+        long id = Long.parseLong(sc.nextLine());
 
         try {
             System.out.println( service.getOne(id) );
@@ -74,7 +74,7 @@ public class MenuLivre {
         // TODO : préciser
         System.out.println("Un faux element va être inséré");
         try {
-            service.insert(new LivreDTO());
+            service.insert(new AuteurDTO());
         } catch (ElementAlreadyPresentException e) {
             System.out.println(e.getMessage());
         }
@@ -82,12 +82,11 @@ public class MenuLivre {
     }
     private void delete(){
 
-        System.out.println("id du livre");
-        String id = sc.nextLine();
+        System.out.println("id de l'auteur: ");
+        long id = Long.parseLong(sc.nextLine());
 
         try {
             service.delete(id);
-            System.out.println("succes");
         } catch (ElementNotFoundException e) {
             System.out.println(e.getMessage());
         }
